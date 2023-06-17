@@ -5,6 +5,9 @@ import { ExpressLoader } from './loaders/express.loader';
 import { FastifyLoader } from './loaders/fastify.loader';
 import { NoopLoader } from './loaders/noop.loader';
 
+/**
+ * @publicApi
+ */
 export const serveStaticProviders: Provider[] = [
   {
     provide: AbstractLoader,
