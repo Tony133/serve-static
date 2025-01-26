@@ -5,7 +5,7 @@ import {
   OnModuleInit,
   Provider
 } from '@nestjs/common';
-import { HttpAdapterHost } from '@nestjs/core';
+import { ApplicationConfig, HttpAdapterHost } from '@nestjs/core';
 import {
   ServeStaticModuleAsyncOptions,
   ServeStaticModuleOptions,
@@ -24,8 +24,9 @@ import { serveStaticProviders } from './serve-static.providers';
 export class ServeStaticModule implements OnModuleInit {
   constructor(
     @Inject(SERVE_STATIC_MODULE_OPTIONS)
-    private readonly ngOptions: ServeStaticModuleOptions[],
+    private readonly moduleOptions: ServeStaticModuleOptions[],
     private readonly loader: AbstractLoader,
+    private readonly config: ApplicationConfig,
     private readonly httpAdapterHost: HttpAdapterHost
   ) {}
 
@@ -88,8 +89,8 @@ export class ServeStaticModule implements OnModuleInit {
     };
   }
 
-  public async onModuleInit() {
+  public onModuleInit() {
     const httpAdapter = this.httpAdapterHost.httpAdapter;
-    this.loader.register(httpAdapter, this.ngOptions);
+    this.loader.register(httpAdapter, this.config, this.moduleOptions);
   }
 }
